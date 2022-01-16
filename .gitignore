@@ -15,9 +15,6 @@
 *.log
 
 # Test 
-test/ascii/*
-test/binary/*
-test/json/*
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
