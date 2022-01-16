@@ -11,5 +11,13 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Log file for debugging
+*.log
+
+# Test 
+test/ascii/*
+test/binary/*
+test/json/*
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
