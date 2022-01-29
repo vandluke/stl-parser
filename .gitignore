@@ -15,8 +15,10 @@
 *.log
 
 # Test 
-test/ascii_read/*
-test/binary_read/*
+test/ascii_read/travis_scott_ascii.stl
+test/ascii_read/the_weeknd_ascii.stl
+test/binary_read/travis_scott_binary.stl
+test/binary_read/the_weeknd_binary.stl
 #test/ascii_write/*
 #test/binary_write/*
 test/json/*
