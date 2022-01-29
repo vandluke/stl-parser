@@ -16,7 +16,7 @@ import (
 const (
 	STL_BINARY = iota
 	STL_ASCII
-	BATCH_SIZE = 1000
+	BATCH_SIZE = 10000
 )
 
 type STLFile struct {
@@ -52,7 +52,7 @@ func OpenSTL(path string) (*STLFile, error) {
 	}
 
 	// Read Header
-	// Binary: UINT8[80] – Header (must not begin with “solid”)
+	// Binary: UINT8[80] – Header (must not begin with "solid")
 	// Ascii: solid <name>
 	buf := make([]uint8, 5)
 	_, err = stlFile.File.Read(buf)

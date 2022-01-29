@@ -15,8 +15,10 @@
 *.log
 
 # Test 
-test/ascii/*
-test/binary/*
+test/ascii_read/*
+test/binary_read/*
+#test/ascii_write/*
+#test/binary_write/*
 test/json/*
 
 # Dependency directories (remove the comment below to include it)
