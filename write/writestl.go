@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 
@@ -12,6 +13,9 @@ import (
 )
 
 func WriteSTL(path string, flavor int, stlData *read.STLData) error {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		os.MkdirAll(filepath.Dir(path), 0700)
+	}
 	file, err := os.Create(path)
 	if err != nil {
 		return err
