@@ -88,7 +88,7 @@ func writeBinarySTL(file *os.File, stlData *STLData) error {
 
 func writeAsciiSTL(file *os.File, stlData *STLData) error {
 	// Initilize with header
-	_, err := file.WriteString("solid Exported from angl3dgo-watermark-stl\n")
+	_, err := file.WriteString("solid Exported from stl-parser\n")
 	if err != nil {
 		return err
 	}
@@ -145,7 +145,7 @@ func writeAsciiSTL(file *os.File, stlData *STLData) error {
 		}
 	}
 
-	_, err = file.WriteString("endsolid Exported from angl3dgo-watermark-stl\n")
+	_, err = file.WriteString("endsolid Exported from stl-parser\n")
 	if err != nil {
 		return err
 	}
