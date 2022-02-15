@@ -1,4 +1,4 @@
-package write
+package parse
 
 import (
 	"encoding/binary"
@@ -8,11 +8,9 @@ import (
 	"path/filepath"
 	"strings"
 	"sync"
-
-	"github.com/angl3dprinting/angl3dgo-watermark-stl/read"
 )
 
-func WriteSTL(path string, flavor int, stlData *read.STLData) error {
+func WriteSTL(path string, flavor int, stlData *STLData) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		os.MkdirAll(filepath.Dir(path), 0700)
 	}
@@ -23,16 +21,16 @@ func WriteSTL(path string, flavor int, stlData *read.STLData) error {
 	defer file.Close()
 
 	switch flavor {
-	case read.STL_ASCII:
+	case STL_ASCII:
 		return writeAsciiSTL(file, stlData)
-	case read.STL_BINARY:
+	case STL_BINARY:
 		return writeBinarySTL(file, stlData)
 	default:
 		return fmt.Errorf("unknown flavor \"%d\"", flavor)
 	}
 }
 
-func writeBinarySTL(file *os.File, stlData *read.STLData) error {
+func writeBinarySTL(file *os.File, stlData *STLData) error {
 	// Initilize with empty header
 	buf := make([]uint8, 80)
 	// Add number of triangles
@@ -40,15 +38,15 @@ func writeBinarySTL(file *os.File, stlData *read.STLData) error {
 	binary.LittleEndian.PutUint32(numberOfTriangles, uint32(stlData.NumberOfTriangles))
 	buf = append(buf, numberOfTriangles...)
 
-	batchNum := stlData.NumberOfTriangles / read.BATCH_SIZE
-	if stlData.NumberOfTriangles%read.BATCH_SIZE != 0 {
+	batchNum := stlData.NumberOfTriangles / BATCH_SIZE
+	if stlData.NumberOfTriangles%BATCH_SIZE != 0 {
 		batchNum++
 	}
 	batches := make([][]uint8, batchNum)
 	wg := new(sync.WaitGroup)
 	wg.Add(batchNum)
 	for i := 0; i < batchNum; i++ {
-		lowerBound, upperBound := i*read.BATCH_SIZE, (i+1)*read.BATCH_SIZE
+		lowerBound, upperBound := i*BATCH_SIZE, (i+1)*BATCH_SIZE
 		if upperBound > stlData.NumberOfTriangles {
 			if lowerBound >= stlData.NumberOfTriangles {
 				break
@@ -88,22 +86,22 @@ func writeBinarySTL(file *os.File, stlData *read.STLData) error {
 	return err
 }
 
-func writeAsciiSTL(file *os.File, stlData *read.STLData) error {
+func writeAsciiSTL(file *os.File, stlData *STLData) error {
 	// Initilize with header
 	_, err := file.WriteString("solid Exported from angl3dgo-watermark-stl\n")
 	if err != nil {
 		return err
 	}
 
-	batchNum := stlData.NumberOfTriangles / read.BATCH_SIZE
-	if stlData.NumberOfTriangles%read.BATCH_SIZE != 0 {
+	batchNum := stlData.NumberOfTriangles / BATCH_SIZE
+	if stlData.NumberOfTriangles%BATCH_SIZE != 0 {
 		batchNum++
 	}
 	batches := make([]strings.Builder, batchNum)
 	wg := new(sync.WaitGroup)
 	wg.Add(batchNum)
 	for i := 0; i < batchNum; i++ {
-		lowerBound, upperBound := i*read.BATCH_SIZE, (i+1)*read.BATCH_SIZE
+		lowerBound, upperBound := i*BATCH_SIZE, (i+1)*BATCH_SIZE
 		if upperBound > stlData.NumberOfTriangles {
 			if lowerBound >= stlData.NumberOfTriangles {
 				break

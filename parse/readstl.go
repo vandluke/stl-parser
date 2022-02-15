@@ -1,4 +1,4 @@
-package read
+package parse
 
 import (
 	"encoding/binary"

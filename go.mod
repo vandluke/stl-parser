@@ -1,3 +1,3 @@
-module github.com/angl3dprinting/angl3dgo-watermark-stl
+module github.com/angl3dprinting/stl-parser
 
 go 1.17
