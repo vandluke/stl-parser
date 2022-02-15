@@ -27,13 +27,13 @@ func main() {
 
     // Open STL files
     // Binary Flavor
-    binarySTLFile, err := read.OpenSTL(stlBinaryPath)
+    binarySTLFile, err := parse.OpenSTL(stlBinaryPath)
     if err != nil {
         log.Fatalf("ERROR: %v", err)
     }
 
     // ASCII Flavor
-    asciiSTLFile, err := read.OpenSTL(stlAsciiPath)
+    asciiSTLFile, err := parse.OpenSTL(stlAsciiPath)
     if err != nil {
         log.Fatalf("ERROR: %v", err)
     }
