@@ -3,7 +3,7 @@
 Basic STL parser for binary and ASCII flavors.
 
 ```cmd
-go get -v github.com/angl3dprinting/stl-parser/parse
+go get -v github.com/vandluke/stl-parser/stl
 ```
 
 Example Code

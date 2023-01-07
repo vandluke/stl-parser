@@ -1,3 +1,3 @@
-module github.com/angl3dprinting/stl-parser
+module github.com/vandluke/stl-parser
 
-go 1.17
+go 1.19

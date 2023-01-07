@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/angl3dprinting/stl-parser/parse"
+	"github.com/vandluke/stl-parser/stl"
 )
 
 type TestSTLJson struct {

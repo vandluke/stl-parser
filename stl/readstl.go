@@ -1,4 +1,4 @@
-package parse
+package stl
 
 import (
 	"encoding/binary"
