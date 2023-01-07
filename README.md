@@ -27,13 +27,13 @@ func main() {
 
     // Open STL files
     // Binary Flavor
-    binarySTLFile, err := parse.OpenSTL(stlBinaryPath)
+    binarySTLFile, err := stl.OpenSTL(stlBinaryPath)
     if err != nil {
         log.Fatalf("ERROR: %v", err)
     }
 
     // ASCII Flavor
-    asciiSTLFile, err := parse.OpenSTL(stlAsciiPath)
+    asciiSTLFile, err := stl.OpenSTL(stlAsciiPath)
     if err != nil {
         log.Fatalf("ERROR: %v", err)
     }
@@ -53,13 +53,13 @@ func main() {
 
     // Write STL
     // Binary Flavor
-    err = parse.WriteSTL("out/new_test_binary.stl", parse.STL_BINARY, &binarySTLFile.Data)
+    err = stl.WriteSTL("out/new_test_binary.stl", stl.STL_BINARY, &binarySTLFile.Data)
     if err != nil {
         log.Fatalf("ERROR: %v", err)
     }
 
     // ASCII Flavor
-    err = parse.WriteSTL("out/new_test_ascii.stl", parse.STL_ASCII, &asciiSTLFile.Data)
+    err = stl.WriteSTL("out/new_test_ascii.stl", stl.STL_ASCII, &asciiSTLFile.Data)
     if err != nil {
         log.Fatalf("ERROR: %v", err)
     }

@@ -18,10 +18,10 @@ type TestSTLJson struct {
 }
 
 type TestSTLCase struct {
-	ReturnedBinary      parse.STLData
-	ReturnedAscii       parse.STLData
-	ReturnedBinaryWrite parse.STLData
-	ReturnedAsciiWrite  parse.STLData
+	ReturnedBinary      stl.STLData
+	ReturnedAscii       stl.STLData
+	ReturnedBinaryWrite stl.STLData
+	ReturnedAsciiWrite  stl.STLData
 	Expected            TestSTLJson
 }
 
@@ -63,7 +63,7 @@ func TestReadWriteSTL(t *testing.T) {
 			return err
 		}
 		if strings.HasSuffix(path, ".stl") {
-			stlFile, err := parse.OpenSTL(path)
+			stlFile, err := stl.OpenSTL(path)
 			if err != nil {
 				return err
 			}
@@ -79,13 +79,13 @@ func TestReadWriteSTL(t *testing.T) {
 
 			// Write
 			writePath := "binary_write/" + base
-			err = parse.WriteSTL(writePath, parse.STL_BINARY, &stlFile.Data)
+			err = stl.WriteSTL(writePath, stl.STL_BINARY, &stlFile.Data)
 			if err != nil {
 				return err
 			}
 
 			// Read Written File
-			stlWriteFile, err := parse.OpenSTL(writePath)
+			stlWriteFile, err := stl.OpenSTL(writePath)
 			if err != nil {
 				return err
 			}
@@ -106,7 +106,7 @@ func TestReadWriteSTL(t *testing.T) {
 			return err
 		}
 		if strings.HasSuffix(path, ".stl") {
-			stlFile, err := parse.OpenSTL(path)
+			stlFile, err := stl.OpenSTL(path)
 			if err != nil {
 				return err
 			}
@@ -122,13 +122,13 @@ func TestReadWriteSTL(t *testing.T) {
 
 			// Write
 			writePath := "ascii_write/" + base
-			err = parse.WriteSTL(writePath, parse.STL_ASCII, &stlFile.Data)
+			err = stl.WriteSTL(writePath, stl.STL_ASCII, &stlFile.Data)
 			if err != nil {
 				return err
 			}
 
 			// Read Written File
-			stlWriteFile, err := parse.OpenSTL(writePath)
+			stlWriteFile, err := stl.OpenSTL(writePath)
 			if err != nil {
 				return err
 			}
@@ -203,13 +203,13 @@ func TestReadWriteSTL(t *testing.T) {
 }
 
 func BenchmarkReadBinarySTL(b *testing.B) {
-	benchmarks := make(map[string]*parse.STLFile)
+	benchmarks := make(map[string]*stl.STLFile)
 	err := filepath.Walk("binary_read/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if strings.HasSuffix(path, ".stl") {
-			stlFile, err := parse.OpenSTL(path)
+			stlFile, err := stl.OpenSTL(path)
 			if err != nil {
 				return err
 			}
@@ -234,13 +234,13 @@ func BenchmarkReadBinarySTL(b *testing.B) {
 }
 
 func BenchmarkReadAsciiSTL(b *testing.B) {
-	benchmarks := make(map[string]*parse.STLFile)
+	benchmarks := make(map[string]*stl.STLFile)
 	err := filepath.Walk("ascii_read/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if strings.HasSuffix(path, ".stl") {
-			stlFile, err := parse.OpenSTL(path)
+			stlFile, err := stl.OpenSTL(path)
 			if err != nil {
 				return err
 			}
@@ -265,13 +265,13 @@ func BenchmarkReadAsciiSTL(b *testing.B) {
 }
 
 func BenchmarkWriteBinarySTL(b *testing.B) {
-	benchmarks := make(map[string]*parse.STLFile)
+	benchmarks := make(map[string]*stl.STLFile)
 	err := filepath.Walk("binary_read/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if strings.HasSuffix(path, ".stl") {
-			stlFile, err := parse.OpenSTL(path)
+			stlFile, err := stl.OpenSTL(path)
 			if err != nil {
 				return err
 			}
@@ -289,7 +289,7 @@ func BenchmarkWriteBinarySTL(b *testing.B) {
 	for fileName, bm := range benchmarks {
 		b.Run(fileName, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				parse.WriteSTL("binary_write/"+fileName+"write_binary.stl", parse.STL_BINARY, &bm.Data)
+				stl.WriteSTL("binary_write/"+fileName+"write_binary.stl", stl.STL_BINARY, &bm.Data)
 			}
 		})
 		bm.Close()
@@ -297,13 +297,13 @@ func BenchmarkWriteBinarySTL(b *testing.B) {
 }
 
 func BenchmarkWriteAsciiSTL(b *testing.B) {
-	benchmarks := make(map[string]*parse.STLFile)
+	benchmarks := make(map[string]*stl.STLFile)
 	err := filepath.Walk("ascii_read/", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 		if strings.HasSuffix(path, ".stl") {
-			stlFile, err := parse.OpenSTL(path)
+			stlFile, err := stl.OpenSTL(path)
 			if err != nil {
 				return err
 			}
@@ -321,7 +321,7 @@ func BenchmarkWriteAsciiSTL(b *testing.B) {
 	for fileName, bm := range benchmarks {
 		b.Run(fileName, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				parse.WriteSTL("ascii_write/"+fileName+"write_ascii.stl", parse.STL_ASCII, &bm.Data)
+				stl.WriteSTL("ascii_write/"+fileName+"write_ascii.stl", stl.STL_ASCII, &bm.Data)
 			}
 		})
 		bm.Close()
